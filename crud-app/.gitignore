@@ -1,0 +1,41 @@
+# Go Binary
+/tmp/
+/bin
+/build
+
+# Go Modules
+/vendor/
+
+# Go workspace configuration files
+.idea/
+.vscode/
+
+# Dependency directories
+node_modules/
+
+# OS-specific files
+.DS_Store        # macOS
+Thumbs.db        # Windows
+
+# Go test binary
+*.test
+*.out
+
+# Log files
+*.log
+
+# Coverage files
+*.coverprofile
+
+# Go specific files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Makefile
+Makefile
+
+# Other files generated during build
+*.swp
