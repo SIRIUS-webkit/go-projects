@@ -12,6 +12,6 @@ func NewModels(db *sql.DB) Models {
 	return Models{
 		Users:     UserModel{DB: db},
 		Events:    EventModel{DB: db},
-		Attendees: AttendeeModel{DB, db},
+		Attendees: AttendeeModel{DB: db},
 	}
 }
