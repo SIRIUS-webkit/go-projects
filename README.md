@@ -24,7 +24,7 @@ Absolutely! Transitioning from learning Go to applying it in real-world projects
 
 ### 3. **User Authentication System**
 
-- **Description** Implement user registration and login functionalities with token-based authenticatio.
+- **Description** Implement user registration and login functionalities with token-based authenticatio.
 - **Technologies** Go, PostgreSQL, JWT, Gi.
 - **Learning Goals** Understand JWT, middleware, and secure password handlin.
 - **Tutorial** [CRUD API with Go and PostgreSQL](https://dev.to/chetansj27/crud-api-with-go-and-postgresql-411)
