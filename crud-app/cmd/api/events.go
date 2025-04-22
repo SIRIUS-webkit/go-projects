@@ -98,3 +98,109 @@ func (app *application) deleteEvent(c *gin.Context){
 
 	c.JSON(http.StatusOK, gin.H{"message": "Event deleted successfully"})
 }
+
+func (app *application) addAttendeeToEvent(c *gin.Context){
+	eventId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid event id"})
+		return
+	}
+	
+	userId, err := strconv.Atoi(c.Param("userId"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user id"})
+		return
+	}
+	
+	_, err = app.models.Events.Get(eventId)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Event not found"})
+		return
+	}
+
+	_, err = app.models.Users.Get(userId)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+
+	existingAttendee, err := app.models.Attendees.GetByEventAndAttendee(eventId, userId)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Attendee not found"})
+		return
+	}
+
+	if existingAttendee != nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "User already an attendee"})
+		return
+	}
+
+	attendee := database.Attendee{
+		EventId: eventId,
+		UserId: userId,
+	}
+
+	err = app.models.Attendees.Insert(&attendee)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add attendee"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, attendee)
+	
+}
+
+func (app *application) getAttendeesForEvent(c *gin.Context){
+	eventId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid event id"})
+		return
+	}
+
+	attendees, err := app.models.Attendees.GetAttendeesByEvent(eventId)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get attendees"})
+		return
+	}
+
+	c.JSON(http.StatusOK, attendees)
+}
+
+func (app *application) deleteAttendeeFromEvent(c *gin.Context){
+	eventId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid event id"})
+		return
+	}	
+
+	userId, err := strconv.Atoi(c.Param("userId"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user id"})
+		return
+	}
+
+	err = app.models.Attendees.Delete(eventId, userId)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete attendee"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Attendee deleted successfully"})
+}
+
+func (app *application) getEventsByAttendee(c *gin.Context){
+	userId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user id"})
+		return
+	}
+
+	events, err := app.models.Attendees.GetEventsByAttendee(userId)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get events"})
+		return
+	}
+
+	c.JSON(http.StatusOK, events)
+}
+
