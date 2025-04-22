@@ -31,7 +31,7 @@ Absolutely! Transitioning from learning Go to applying it in real-world projects
 
 ### 4. **Blog Platform Backend**
 
-- **Description** Create a backend that allows users to write, edit, and delete blog posts with basic user managemen.
+- **Description** Create a backend that allows users to write, edit, and delete blog posts with basic user managemen.
 - **Technologies** Go, PostgreSQL, Gin, JW.
 - **Learning Goals** Implement CRUD operations, user roles, and authenticatio.
 - **Tutorial** [Rest API with GO Lang and PostgreSQL](https://deadsimplechat.com/blog/rest-api-with-golang-and-postgresql)
