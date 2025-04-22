@@ -9,6 +9,17 @@ import (
 	_ "modernc.org/sqlite"
 )
 
+// @title Go Gin Rest API
+// @version 1.0
+// @description A rest API in Go using Gin framework.
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Enter your bearer token in the format **Bearer &lt;token&gt;**
+
+// Apply the security definition to your endpoints
+// @security BearerAuth
+
 type application struct{
 	port int
 	jwtSecret string

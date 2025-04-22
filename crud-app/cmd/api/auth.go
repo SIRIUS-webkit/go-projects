@@ -16,6 +16,16 @@ type RegisterUserRequest struct {
 	Password string `json:"password" binding:"required,min=8"`
 }
 
+// RegisterUser registers a new user
+// @Summary		Registers a new user
+// @Description	Registers a new user
+// @Tags			auth
+// @Accept			json
+// @Produce		json
+// @Param			user	body		registerRequest	true	"User"
+// @Success		201	{object}	database.User
+// @Router			/api/v1/auth/register [post]
+
 func (app *application) registerUser(c *gin.Context){
 	var request RegisterUserRequest
 
@@ -57,6 +67,17 @@ type LoginUserRequest struct {
 type LoginUserResponse struct {
 	Token string `json:"token"`
 }
+
+// Login logs in a user
+//
+//	@Summary		Logs in a user
+//	@Description	Logs in a user
+//	@Tags			auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			user	body	loginRequest	true	"User"
+//	@Success		200	{object}	loginResponse
+//	@Router			/api/v1/auth/login [post]
 
 func (app *application) loginUser(c *gin.Context){
 	var request LoginUserRequest
